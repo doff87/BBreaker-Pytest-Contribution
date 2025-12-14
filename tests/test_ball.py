@@ -25,3 +25,35 @@ def test_calculate_strike_angle(start_pos, end_pos, expect_none):
         assert angle is None
     else:
         assert angle is not None
+
+# Arrange
+@pytest.mark.parametrize(
+    "x, y, vx, vy, expect_vy_positive",
+    [                           
+        (400, 300, -5, -5, False), # No wall contact - vy unchanged 
+        (5, 200, -5, -5, False), # Left wall contact - vy unchanged
+        (400, 4, -5, -5, True), # Top wall contact - vy flips
+    ]
+)
+
+def test_ball_bounces_off_top_wall(x, y, vx, vy, expect_vy_positive):
+    # Arrange
+    pygame.display.set_mode((800, 600))
+    surface = pygame.display.get_surface()
+
+    ball = Ball(surface)
+    ball.x = x
+    ball.y = y
+    ball.vx = vx
+    ball.vy = vy
+
+    ball.game_on = True
+
+    # Act
+    ball.update(surface)
+
+    # Assert
+    if expect_vy_positive:
+        assert ball.vy > 0
+    else:
+        assert ball.vy < 0
