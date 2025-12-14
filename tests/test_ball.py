@@ -194,14 +194,7 @@ def test_two_brick_collision_variants(vx, vy, case, expect_vx_positive, expect_v
 )
 
 def test_three_brick_collision_flips_both_axes(vx, vy, expect_vx_positive, expect_vy_positive):
-    # These tests failing reflects the structure for three-brick collision handling in Ball.py is misconstructed.
-    # As written, the method handler utilizes two if statements, not an if-elif-else structure,
-    # so that when three bricks are hit, the single-brick handler is also invoked after the three-brick handler,
-    # given a three-brick block collision. The logic of the handlers is such that the single-brick handler
-    # requires ball.rect to be set, whereas the handler does not require that parameter. In normal play,
-    # that isn't an issue, but in the testing suite it causes an AttributeError.
-    # To fix this issue, ball.handle_brick_collisions should be restructured to use if-elif-else.
-
+    
     pygame.display.set_mode((800, 600))
     surface = pygame.display.get_surface()
 

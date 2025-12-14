@@ -118,7 +118,7 @@ class Ball(pygame.sprite.Sprite):
     def handle_brick_collisions(self, bricks_hit):
         if len(bricks_hit) == 3:
             self.handle_three_brick_collision()
-        if len(bricks_hit) == 2:
+        elif len(bricks_hit) == 2:
             self.handle_two_brick_collision(bricks_hit)
         else:
             self.handle_one_brick_collision(bricks_hit[0])
