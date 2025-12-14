@@ -57,3 +57,34 @@ def test_ball_bounces_off_top_wall(x, y, vx, vy, expect_vy_positive):
         assert ball.vy > 0
     else:
         assert ball.vy < 0
+
+# Arrange
+@pytest.mark.parametrize(
+    "x, y, vx, vy, expect_vx_positive",
+    [                           
+        (400, 200, -5, -5, False), # No wall contact - vx unchanged
+        (4, 200, -5, -5, True), # Left wall contact - vx flips
+        (796, 200, 5, -5, False), # Right wall contact - vx flips
+    ]
+)
+
+def test_ball_bounces_off_side_wall(x, y, vx, vy, expect_vx_positive):
+    # Arrange
+    pygame.display.set_mode((800, 600))
+    surface = pygame.display.get_surface()
+
+    ball = Ball(surface)
+    ball.x = x
+    ball.y = y
+    ball.vx = vx
+    ball.vy = vy
+    ball.game_on = True
+
+    # Act
+    ball.update(surface)
+
+    # Assert
+    if expect_vx_positive:
+        assert ball.vx > 0
+    else:
+        assert ball.vx < 0
